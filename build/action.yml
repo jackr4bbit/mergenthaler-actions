@@ -1,0 +1,40 @@
+name: "Mergenthaler build"
+description: "Builds a static site from a Mergenthaler feed."
+author: "jackr4bbit"
+
+inputs:
+  location:
+    description: "Path to the feed file or directory containing it to build from"
+    required: false
+    default: "."
+  output:
+    description: "Path to the output directory"
+    required: false
+    default: "output"
+  nodelete:
+    description: "Don't delete all existing files in the output directory"
+    required: false
+    default: "false"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.14"
+
+    - name: Install Python Package
+      shell: bash
+      run: pip install mergenthaler
+
+    - name: Run Build Command
+      shell: bash
+      run: |
+        CMD="mg build --location '${{ inputs.location }}' --output '${{ inputs.output }}'"
+        
+        if [ "${{ inputs.nodelete }}" = "true" ]; then
+          CMD="$CMD --nodelete"
+        fi
+        
+        eval $CMD

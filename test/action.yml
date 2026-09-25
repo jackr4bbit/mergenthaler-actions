@@ -1,0 +1,25 @@
+name: "Mergenthaler test"
+description: "Tests a Mergenthaler feed's syntax."
+author: "jackr4bbit"
+
+inputs:
+  location:
+    description: "Path to the feed file or directory containing it to test"
+    required: false
+    default: "."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.14"
+
+    - name: Install Python Package
+      shell: bash
+      run: pip install mergenthaler
+
+    - name: Run Test Command
+      shell: bash
+      run: mg test --location '${{ inputs.location }}'
