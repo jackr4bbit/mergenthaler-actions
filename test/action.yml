@@ -1,5 +1,5 @@
 name: "Mergenthaler test"
-description: "Tests a Mergenthaler feed's syntax."
+description: "Validates a Mergenthaler feed's syntax."
 author: "jackr4bbit"
 
 inputs:
